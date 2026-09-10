@@ -117,6 +117,52 @@ footer{text-align:center;padding:35px;color:#a1a1aa;font-size:12px}
  .full{grid-column:auto}
  .section{padding-top:65px}
 }
+
+/* Interactive image viewer */
+.zoomable{cursor:zoom-in;transition:transform .2s ease}
+.zoomable:hover{transform:scale(1.012)}
+.lightbox{
+  position:fixed;inset:0;z-index:9999;display:none;
+  background:rgba(0,0,0,.94);align-items:center;justify-content:center;
+  padding:70px 28px 35px;
+}
+.lightbox.open{display:flex}
+.lightbox-stage{
+  width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;touch-action:none;
+}
+.lightbox img{
+  max-width:94vw;max-height:88vh;width:auto;height:auto;
+  object-fit:contain;cursor:grab;user-select:none;
+  transform-origin:center center;
+}
+.lightbox img.dragging{cursor:grabbing}
+.lb-close{
+  position:absolute;right:22px;top:18px;width:46px;height:46px;border:0;
+  border-radius:50%;background:#ffffff18;color:white;font-size:28px;
+  cursor:pointer;z-index:3;
+}
+.lb-controls{
+  position:absolute;left:50%;bottom:20px;transform:translateX(-50%);
+  display:flex;align-items:center;gap:7px;padding:8px;
+  border:1px solid #ffffff22;background:#111c;border-radius:14px;
+  backdrop-filter:blur(12px);z-index:3;
+}
+.lb-controls button{
+  width:40px;height:38px;border:0;border-radius:9px;background:#ffffff12;
+  color:white;font-size:18px;cursor:pointer;
+}
+.lb-controls button:hover{background:#ffffff25}
+.lb-percent{min-width:55px;text-align:center;color:#ddd;font-size:12px}
+.lb-hint{
+  position:absolute;top:22px;left:50%;transform:translateX(-50%);
+  color:#aaa;font-size:12px;pointer-events:none;
+}
+@media(max-width:700px){
+ .lightbox{padding:60px 10px 75px}
+ .lb-hint{display:none}
+}
+
 </style>
 </head>
 
@@ -180,9 +226,9 @@ footer{text-align:center;padding:35px;color:#a1a1aa;font-size:12px}
      Hunyuan 3Dを開く ↗
     </a>
     <div class="images">
-     <div class="figure"><img src="L1.jpg" alt="Hunyuan 3D L1"><div class="caption">L1 — Hunyuan 3Dを開く</div></div>
-     <div class="figure"><img src="L2.jpg" alt="Hunyuan 3D L2"><div class="caption">L2 — 写真をアップロード</div></div>
-     <div class="figure full"><img src="L3.jpg" alt="Hunyuan 3D L3"><div class="caption">L3 — 3Dモデルの生成</div></div>
+     <div class="figure"><img class="zoomable" src="L1.jpg" alt="Hunyuan 3D L1"><div class="caption">L1 — Hunyuan 3Dを開く</div></div>
+     <div class="figure"><img class="zoomable" src="L2.jpg" alt="Hunyuan 3D L2"><div class="caption">L2 — 写真をアップロード</div></div>
+     <div class="figure full"><img class="zoomable" src="L3.jpg" alt="Hunyuan 3D L3"><div class="caption">L3 — 3Dモデルの生成</div></div>
     </div>
    </div>
   </div>
@@ -216,9 +262,9 @@ footer{text-align:center;padding:35px;color:#a1a1aa;font-size:12px}
     <h3>Otoblendを起動</h3>
     <p>Otoblendを開き、先ほどダウンロードしたFBXファイルを選択します。</p>
     <div class="images">
-     <div class="figure"><img src="L4.jpg" alt="Otoblend L4"><div class="caption">L4 — Otoblendを起動</div></div>
-     <div class="figure"><img src="L5.jpg" alt="FBX選択 L5"><div class="caption">L5 — FBXファイルを選択</div></div>
-     <div class="figure full"><img src="L6.jpg" alt="Otoblend L6"><div class="caption">L6 — 変換処理を開始</div></div>
+     <div class="figure"><img class="zoomable" src="L4.jpg" alt="Otoblend L4"><div class="caption">L4 — Otoblendを起動</div></div>
+     <div class="figure"><img class="zoomable" src="L5.jpg" alt="FBX選択 L5"><div class="caption">L5 — FBXファイルを選択</div></div>
+     <div class="figure full"><img class="zoomable" src="L6.jpg" alt="Otoblend L6"><div class="caption">L6 — 変換処理を開始</div></div>
     </div>
    </div>
   </div>
@@ -231,8 +277,8 @@ footer{text-align:center;padding:35px;color:#a1a1aa;font-size:12px}
     <h3>処理が完了するまで待つ</h3>
     <p>処理中はそのまま待ちます。モデルの内容によって処理時間が異なる場合があります。</p>
     <div class="images">
-     <div class="figure"><img src="L7.jpg" alt="処理中 L7"><div class="caption">L7 — 処理中</div></div>
-     <div class="figure"><img src="L8.jpg" alt="処理完了 L8"><div class="caption">L8 — 処理完了</div></div>
+     <div class="figure"><img class="zoomable" src="L7.jpg" alt="処理中 L7"><div class="caption">L7 — 処理中</div></div>
+     <div class="figure"><img class="zoomable" src="L8.jpg" alt="処理完了 L8"><div class="caption">L8 — 処理完了</div></div>
     </div>
    </div>
   </div>
@@ -245,7 +291,7 @@ footer{text-align:center;padding:35px;color:#a1a1aa;font-size:12px}
     <h3>Archicadへインポート</h3>
     <p>変換された3DSファイルをArchicadへインポートして使用します。</p>
     <div class="images">
-     <div class="figure full"><img src="LF.jpg" alt="Archicad LF"><div class="caption">LF — 3DSファイルをArchicadへインポート</div></div>
+     <div class="figure full"><img class="zoomable" src="LF.jpg" alt="Archicad LF"><div class="caption">LF — 3DSファイルをArchicadへインポート</div></div>
     </div>
    </div>
   </div>
@@ -278,7 +324,7 @@ footer{text-align:center;padding:35px;color:#a1a1aa;font-size:12px}
     <h3>Blenderの設定を確認</h3>
     <p>Blenderがインストールされ、3DS関連の機能が有効になっていることを確認します。</p>
     <div class="images">
-     <div class="figure full"><img src="M1.jpg" alt="Blender設定 M1"><div class="caption">M1 — Blenderの設定を確認</div></div>
+     <div class="figure full"><img class="zoomable" src="M1.jpg" alt="Blender設定 M1"><div class="caption">M1 — Blenderの設定を確認</div></div>
     </div>
    </div>
   </div>
@@ -307,7 +353,7 @@ footer{text-align:center;padding:35px;color:#a1a1aa;font-size:12px}
      Blenderがインストールされているフォルダの場所を確認してコピーします。
     </p>
     <div class="images">
-     <div class="figure full"><img src="M3.jpg" alt="Blenderプロパティ M3"><div class="caption">M3 — Blenderのフォルダパスを確認</div></div>
+     <div class="figure full"><img class="zoomable" src="M3.jpg" alt="Blenderプロパティ M3"><div class="caption">M3 — Blenderのフォルダパスを確認</div></div>
     </div>
    </div>
   </div>
@@ -323,8 +369,8 @@ footer{text-align:center;padding:35px;color:#a1a1aa;font-size:12px}
      赤線で示された場所に、先ほどコピーしたBlenderのフォルダパスを貼り付けます。
     </p>
     <div class="images">
-     <div class="figure"><img src="M4.jpg" alt="config.py M4"><div class="caption">M4 — config.pyを開く</div></div>
-     <div class="figure"><img src="M5.jpg" alt="パス設定 M5"><div class="caption">M5 — Blenderのパスを貼り付ける</div></div>
+     <div class="figure"><img class="zoomable" src="M4.jpg" alt="config.py M4"><div class="caption">M4 — config.pyを開く</div></div>
+     <div class="figure"><img class="zoomable" src="M5.jpg" alt="パス設定 M5"><div class="caption">M5 — Blenderのパスを貼り付ける</div></div>
     </div>
     <div class="note">
      <strong>この設定の目的：</strong>
@@ -344,7 +390,7 @@ footer{text-align:center;padding:35px;color:#a1a1aa;font-size:12px}
      ダブルクリックして起動します。
     </p>
     <div class="images">
-     <div class="figure full"><img src="M6.jpg" alt="Converter M6"><div class="caption">M6 — FBX_to_3DS_Converter_JP.pywを起動</div></div>
+     <div class="figure full"><img class="zoomable" src="M6.jpg" alt="Converter M6"><div class="caption">M6 — FBX_to_3DS_Converter_JP.pywを起動</div></div>
     </div>
    </div>
   </div>
@@ -369,6 +415,145 @@ footer{text-align:center;padding:35px;color:#a1a1aa;font-size:12px}
 <footer>
  写真から軽量3DSデータを作成するチュートリアル
 </footer>
+
+
+<!-- Fullscreen image viewer -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lb-close" id="lbClose" aria-label="閉じる">×</button>
+  <div class="lb-hint">クリックで拡大・ホイールでズーム・ドラッグで移動・Escで閉じる</div>
+  <div class="lightbox-stage" id="lbStage">
+    <img id="lbImage" src="" alt="">
+  </div>
+  <div class="lb-controls">
+    <button id="lbMinus" aria-label="縮小">−</button>
+    <button id="lbReset" aria-label="リセット">↺</button>
+    <span class="lb-percent" id="lbPercent">100%</span>
+    <button id="lbPlus" aria-label="拡大">＋</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  const box = document.getElementById('lightbox');
+  const img = document.getElementById('lbImage');
+  const stage = document.getElementById('lbStage');
+  const close = document.getElementById('lbClose');
+  const plus = document.getElementById('lbPlus');
+  const minus = document.getElementById('lbMinus');
+  const reset = document.getElementById('lbReset');
+  const percent = document.getElementById('lbPercent');
+
+  let scale = 1, x = 0, y = 0, startX = 0, startY = 0, dragging = false;
+
+  function render(){
+    img.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+    percent.textContent = Math.round(scale * 100) + '%';
+  }
+  function setZoom(next){
+    scale = Math.min(5, Math.max(0.5, next));
+    render();
+  }
+  function resetView(){
+    scale = 1; x = 0; y = 0; render();
+  }
+  function openViewer(source, alt){
+    img.src = source;
+    img.alt = alt || '';
+    resetView();
+    box.classList.add('open');
+    box.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeViewer(){
+    box.classList.remove('open');
+    box.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+    img.src = '';
+  }
+
+  document.querySelectorAll('.zoomable').forEach(el=>{
+    el.addEventListener('click', e=>{
+      e.stopPropagation();
+      openViewer(el.currentSrc || el.src, el.alt);
+    });
+  });
+
+  close.addEventListener('click', closeViewer);
+  box.addEventListener('click', e=>{
+    if(e.target === box || e.target === stage) closeViewer();
+  });
+  plus.addEventListener('click', ()=>setZoom(scale + .25));
+  minus.addEventListener('click', ()=>setZoom(scale - .25));
+  reset.addEventListener('click', resetView);
+
+  stage.addEventListener('wheel', e=>{
+    e.preventDefault();
+    const direction = e.deltaY < 0 ? .15 : -.15;
+    setZoom(scale + direction);
+  }, {passive:false});
+
+  img.addEventListener('mousedown', e=>{
+    dragging = true;
+    img.classList.add('dragging');
+    startX = e.clientX - x;
+    startY = e.clientY - y;
+  });
+  window.addEventListener('mousemove', e=>{
+    if(!dragging) return;
+    x = e.clientX - startX;
+    y = e.clientY - startY;
+    render();
+  });
+  window.addEventListener('mouseup', ()=>{
+    dragging = false;
+    img.classList.remove('dragging');
+  });
+
+  // Touch: pinch zoom + drag
+  let touchStartDist = 0, touchStartScale = 1;
+  stage.addEventListener('touchstart', e=>{
+    if(e.touches.length === 1){
+      dragging = true;
+      startX = e.touches[0].clientX - x;
+      startY = e.touches[0].clientY - y;
+    } else if(e.touches.length === 2){
+      dragging = false;
+      touchStartDist = Math.hypot(
+        e.touches[0].clientX-e.touches[1].clientX,
+        e.touches[0].clientY-e.touches[1].clientY
+      );
+      touchStartScale = scale;
+    }
+  }, {passive:false});
+
+  stage.addEventListener('touchmove', e=>{
+    e.preventDefault();
+    if(e.touches.length === 1 && dragging){
+      x = e.touches[0].clientX - startX;
+      y = e.touches[0].clientY - startY;
+      render();
+    } else if(e.touches.length === 2){
+      const dist = Math.hypot(
+        e.touches[0].clientX-e.touches[1].clientX,
+        e.touches[0].clientY-e.touches[1].clientY
+      );
+      setZoom(touchStartScale * dist / touchStartDist);
+    }
+  }, {passive:false});
+
+  stage.addEventListener('touchend', e=>{
+    if(e.touches.length === 0) dragging = false;
+  });
+
+  document.addEventListener('keydown', e=>{
+    if(!box.classList.contains('open')) return;
+    if(e.key === 'Escape') closeViewer();
+    if(e.key === '+' || e.key === '=') setZoom(scale + .25);
+    if(e.key === '-') setZoom(scale - .25);
+    if(e.key === '0') resetView();
+  });
+})();
+</script>
 
 </body>
 </html>
