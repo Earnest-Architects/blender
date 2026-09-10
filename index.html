@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>写真から軽量3DSデータを作成する方法</title>
+<style>
+  :root{
+    --bg:#f5f6f8; --card:#fff; --text:#20242a; --muted:#68707a;
+    --line:#e5e7eb; --accent:#111827; --blue:#2563eb; --soft:#eef4ff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",
+       "Yu Gothic",Meiryo,sans-serif;line-height:1.8}
+  header{background:linear-gradient(135deg,#111827,#374151);color:white;padding:72px 20px 64px}
+  .hero{max-width:1000px;margin:auto}
+  .tag{display:inline-block;padding:5px 12px;border:1px solid #ffffff44;border-radius:999px;
+       font-size:13px;letter-spacing:.08em;margin-bottom:18px}
+  h1{font-size:clamp(30px,5vw,48px);line-height:1.3;margin:0 0 18px}
+  .lead{font-size:17px;color:#e5e7eb;max-width:760px;margin:0}
+  main{max-width:1000px;margin:0 auto;padding:50px 20px 90px}
+  section{margin-bottom:60px}
+  .section-title{font-size:28px;margin:0 0 12px}
+  .section-desc{color:var(--muted);margin:0 0 28px}
+  .notice{background:var(--soft);border-left:4px solid var(--blue);padding:18px 20px;
+          border-radius:8px;margin:24px 0}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:16px;
+        padding:28px;margin:22px 0;box-shadow:0 4px 16px #00000008}
+  .step-head{display:flex;gap:15px;align-items:flex-start}
+  .num{min-width:42px;height:42px;border-radius:50%;background:var(--accent);color:#fff;
+       display:grid;place-items:center;font-weight:700}
+  h2{font-size:22px;margin:2px 0 8px}
+  .step p{margin:8px 0;color:#444}
+  .images{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:20px}
+  figure{margin:0;background:#f8f8f8;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+  figure img{width:100%;display:block;height:auto}
+  figcaption{padding:9px 12px;font-size:13px;color:var(--muted)}
+  .single{max-width:700px}
+  .download{display:inline-block;margin-top:10px;padding:10px 16px;border-radius:8px;
+            background:#111827;color:white;text-decoration:none;font-weight:600}
+  code{background:#f0f1f3;border-radius:5px;padding:2px 6px;font-size:.92em}
+  .path{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;background:#111827;
+        color:#f9fafb;padding:14px 16px;border-radius:8px;overflow:auto}
+  footer{border-top:1px solid var(--line);padding:35px 20px;text-align:center;color:var(--muted)}
+  @media(max-width:650px){
+    header{padding:52px 18px}.images{grid-template-columns:1fr}
+    main{padding:35px 14px 60px}.step{padding:21px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hero">
+    <div class="tag">ARCHITECTURE / 3D WORKFLOW</div>
+    <h1>写真から軽量な3DSデータを作成する方法</h1>
+    <p class="lead">
+      AIで写真を3Dモデル化し、テクスチャを整理・分離した軽量な3DSファイルを作成して、
+      Archicadへインポートするまでの手順を紹介します。
+    </p>
+  </div>
+</header>
+
+<main>
+
+<section>
+  <h2 class="section-title">このチュートリアルについて</h2>
+  <p class="section-desc">
+    1枚の写真から3Dモデルを作成し、最終的にArchicadで利用できる3DSデータへ変換します。
+    作業には「Tencent Hunyuan 3D」と「Otoblend」を使用します。
+  </p>
+  <div class="notice">
+    <strong>完成までの流れ：</strong>
+    写真 → AI 3Dモデル → FBX / GLB → Otoblend → 3DS → Archicad
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title">Part 1 — 3Dモデルを作成する</h2>
+
+  <div class="step">
+    <div class="step-head">
+      <div class="num">1</div>
+      <div>
+        <h2>Tencent Hunyuan 3Dを開く</h2>
+        <p>
+          まず、下記のWebサイトを開きます。写真から3Dモデルを生成します。
+        </p>
+        <a class="download" href="https://3d.hunyuan.tencent.com/studio/creation/comp"
+           target="_blank" rel="noopener">Tencent Hunyuan 3Dを開く</a>
+      </div>
+    </div>
+    <div class="images">
+      <figure><img src="L1.jpg" alt="Hunyuan 3D 画面 L1"><figcaption>L1 — Webサイトを開く</figcaption></figure>
+      <figure><img src="L2.jpg" alt="Hunyuan 3D 画面 L2"><figcaption>L2 — 写真を使用して3Dモデルを作成</figcaption></figure>
+      <figure><img src="L3.jpg" alt="Hunyuan 3D 画面 L3"><figcaption>L3 — 3Dモデル生成後の画面</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-head">
+      <div class="num">2</div>
+      <div>
+        <h2>FBX または GLB をダウンロード</h2>
+        <p>
+          3Dモデルの生成が完了したら、<code>.FBX</code> または <code>.GLB</code> 形式で
+          ファイルをダウンロードします。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-head">
+      <div class="num">3</div>
+      <div>
+        <h2>Otoblendを起動する</h2>
+        <p>
+          次にOtoblendを開き、先ほどダウンロードしたFBXファイルを選択します。
+        </p>
+      </div>
+    </div>
+    <div class="images">
+      <figure><img src="L4.jpg" alt="Otoblend 起動画面"><figcaption>L4 — Otoblendを起動</figcaption></figure>
+      <figure><img src="L5.jpg" alt="FBXファイル選択"><figcaption>L5 — ダウンロードしたFBXを選択</figcaption></figure>
+      <figure><img src="L6.jpg" alt="Otoblend 処理画面"><figcaption>L6 — 変換処理を開始</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-head">
+      <div class="num">4</div>
+      <div>
+        <h2>処理が完了するまで待つ</h2>
+        <p>
+          変換処理には時間がかかる場合があります。処理が完了するまでそのまま待ちます。
+        </p>
+      </div>
+    </div>
+    <div class="images">
+      <figure><img src="L7.jpg" alt="処理中の画面"><figcaption>L7 — 処理中</figcaption></figure>
+      <figure><img src="L8.jpg" alt="処理完了後の画面"><figcaption>L8 — 処理完了</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-head">
+      <div class="num">5</div>
+      <div>
+        <h2>3DSファイルをArchicadへ</h2>
+        <p>
+          変換が完了すると、3DSファイルをArchicadへインポートして使用できます。
+        </p>
+      </div>
+    </div>
+    <div class="images single">
+      <figure><img src="LF.jpg" alt="Archicadへの3DSインポート"><figcaption>LF — Archicadに3DSファイルをインポート</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title">Part 2 — Otoblendのインストールと設定</h2>
+  <p class="section-desc">
+    初めて使用する場合は、以下の設定を行ってください。
+  </p>
+
+  <div class="notice">
+    <strong>事前準備：</strong>
+    お使いのPCにBlenderがインストールされていることを確認してください。
+    また、Blenderで3DS形式を扱えるように、3DS関連のアドオン／プラグインが有効になっていることを確認します。
+  </div>
+
+  <div class="step">
+    <div class="step-head">
+      <div class="num">1</div>
+      <div>
+        <h2>Blenderのインストールを確認</h2>
+        <p>
+          まずBlenderがPCにインストールされていることを確認します。
+          3DS形式のインポート／エクスポート機能が有効になっているかも確認してください。
+        </p>
+      </div>
+    </div>
+    <div class="images">
+      <figure><img src="M1.jpg" alt="Blenderの設定確認"><figcaption>M1 — Blenderの設定を確認</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-head">
+      <div class="num">2</div>
+      <div>
+        <h2>Otoblendのファイルを準備</h2>
+        <p>
+          <code>Otoblend 2.zip</code> をコピーし、すべてのファイルを1つのフォルダに展開します。
+          次に <code>python-manager-26.3.msix</code> をインストールします。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-head">
+      <div class="num">3</div>
+      <div>
+        <h2>Blenderのフォルダパスをコピー</h2>
+        <p>
+          Blenderのアイコンを右クリックして「プロパティ」を開きます。
+          そこでBlenderがインストールされているフォルダの場所を確認し、そのパスをコピーします。
+        </p>
+      </div>
+    </div>
+    <div class="images">
+      <figure><img src="M3.jpg" alt="Blenderのプロパティ"><figcaption>M3 — Blenderのフォルダパスを確認</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-head">
+      <div class="num">4</div>
+      <div>
+        <h2>config.pyを編集</h2>
+        <p>
+          <code>config.py</code> を右クリックし、「メモ帳」などのテキストエディターで開きます。
+          赤線で示されている部分に、先ほどコピーしたBlenderのフォルダパスを貼り付けます。
+        </p>
+      </div>
+    </div>
+    <div class="images">
+      <figure><img src="M4.jpg" alt="config.pyをメモ帳で開く"><figcaption>M4 — config.pyを編集</figcaption></figure>
+      <figure><img src="M5.jpg" alt="Blenderのパスを貼り付ける"><figcaption>M5 — Blenderのフォルダパスを設定</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-head">
+      <div class="num">5</div>
+      <div>
+        <h2>Otoblendを起動する</h2>
+        <p>
+          すべての設定が完了したら、
+          <code>FBX_to_3DS_Converter_JP.pyw</code> をダブルクリックしてください。
+          スクリプトが自動的にPC内のBlenderを起動し、FBXから3DSへの変換を行います。
+        </p>
+      </div>
+    </div>
+    <div class="images">
+      <figure><img src="M6.jpg" alt="FBX_to_3DS_Converter_JP.pyw"><figcaption>M6 — Converterをダブルクリックして起動</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title">完成</h2>
+  <div class="notice">
+    これで、写真から作成した3Dモデルを、テクスチャを整理した軽量な3DSデータとして
+    Archicadで利用できるようになります。
+  </div>
+  <p>
+    最初の設定が完了すれば、次回からは
+    <code>FBX_to_3DS_Converter_JP.pyw</code> を起動するだけで変換作業を行えます。
+  </p>
+  <p><strong>最後までご覧いただき、ありがとうございました。少しでもお役に立てれば幸いです。</strong></p>
+</section>
+
+</main>
+
+<footer>
+  写真から3DSデータを作成するチュートリアル
+</footer>
+
+</body>
+</html>
